@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Plugins\Shipment\Service;
+namespace App\Plugins\Log\Service;
 
-class ShipmentService
+class LogService
 {
     public function calculateShipment()
     {

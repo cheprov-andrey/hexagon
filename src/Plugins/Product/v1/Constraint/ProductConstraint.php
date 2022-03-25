@@ -16,6 +16,18 @@ class ProductConstraint
             ],
             'weight'  => [
                 AppValidator::NOT_NULL => null,
+            ],
+            'price'  => [
+                AppValidator::NOT_NULL => null,
+            ],
+            'authors'  => [
+                AppValidator::NOT_NULL => null,
             ]
         ];
+
+    public const GET_CONSTRAINT = [
+        'id' => [
+            AppValidator::NOT_NULL => null,
+        ],
+    ];
 }

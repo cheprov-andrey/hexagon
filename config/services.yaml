@@ -18,6 +18,7 @@ services:
         resource: '../src/*/*'
         exclude:
             - '../src/DependencyInjection/'
+            - '../src/Plugins/Common/Repository/*'
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/AppAdapter/'
@@ -39,3 +40,12 @@ services:
     App\EventListener\KernelControllerListener:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 34 }
+    App\EventListener\KernelResponseListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse, priority: 36 }
+    App\EventListener\KernelExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+    App\EventListener\KernelTerminateListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.terminate, method: onKernelFinishRequest, priority: 35 }

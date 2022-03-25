@@ -246,6 +246,17 @@ final class AppValidator
         return true;
     }
 
+    public function validateForArray(array $arrForValidation, array $constraint) : bool
+    {
+        $constraint = $this->getConstraint($constraint);
+        $validation = $this->validator->validate($arrForValidation, $constraint);
+        if (count($validation) > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     private function getConstraint(array $constraint) : Constraint
     {
         $prepareArrayConstraint = [];

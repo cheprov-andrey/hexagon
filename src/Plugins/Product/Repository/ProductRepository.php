@@ -3,12 +3,20 @@
 namespace App\Plugins\Product\Repository;
 
 use App\Plugins\Common\Repository\BaseRepository;
+use App\Plugins\Product\Entity\Product;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ProductRepository extends BaseRepository
 {
-    public function getProduct(array $attribute)
+    private const REPOSITORY = Product::class;
+
+    public function __construct(ManagerRegistry $registry)
     {
-        $test = 0;
-        return 0;
+        parent::__construct($registry, self::REPOSITORY);
+    }
+
+    public function getById(int $id) : ?Product
+    {
+        return $this->findById($id, self::REPOSITORY);
     }
 }
