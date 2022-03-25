@@ -26,11 +26,14 @@ class KernelRequestListener
             if (!is_null($content) && is_array($content)) {
                 $post = $this->prepareDataRequest($content);
             } else {
-                $post = $_POST;
+                if (!is_null($event->getRequest()->getContent())) {
+                    $post = array_merge(json_decode($event->getRequest()->getContent(), true), $_POST ?? []);
+                } else {
+                    $post = $_POST;
+                }
             }
 
-
-            $appRequest = AppRequest::getRequest(new Request($_GET, $post, [], $_COOKIE, $_FILES, $_SERVER));
+            $appRequest = AppRequest::getRequest(new Request($_GET, $post, [], $_COOKIE, $_FILES, $event->getRequest()->server->all()));
             $this->containerBuilder->set(AppRequest::class, $appRequest);
         }
 
@@ -40,7 +43,7 @@ class KernelRequestListener
     private function getContentForRequest() : ?array
     {
         $content = file_get_contents('php://input');
-        if (!is_null($content)) {
+        if (!is_null($content) || $content === "") {
             return json_decode($content, true);
         }
 

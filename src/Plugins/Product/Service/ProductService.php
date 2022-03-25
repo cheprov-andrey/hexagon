@@ -19,15 +19,16 @@ class ProductService extends BaseService
         $this->productRepository = $productRepository;
     }
 
-    public function createProduct(AppRequest $appRequest) : void
+    public function createProduct(array $attributes) : ?Product
     {
         $product = new Product();
-        $product->setName($appRequest->get('name'));
-        $product->setWeight($appRequest->get('weight'));
-        $product->setPrice($appRequest->get('price'));
-        $product->setAuthors($appRequest->get('authors'));
+        $product->setName($attributes['name']);
+        $product->setWeight($attributes['weight']);
+        $product->setPrice($attributes['price']);
+        $product->setAuthors($attributes['authors']);
         $this->em->persist($product);
         $this->em->flush($product);
+        return $product;
     }
 
     public function findByArrayId(array $productIds) : ?array

@@ -14,7 +14,7 @@ class ActionRulesService extends BaseService
         parent::__construct($em);
     }
 
-    public function create(Action $action, array $arrRules) : void
+    public function create(Action $action, array $arrRules) : array
     {
         $rules = [];
         foreach ($arrRules as $dataRule) {
@@ -26,5 +26,6 @@ class ActionRulesService extends BaseService
         }
 
         $this->em->flush($rules);
+        return $rules;
     }
 }

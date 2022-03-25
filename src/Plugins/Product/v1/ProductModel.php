@@ -3,6 +3,7 @@
 namespace App\Plugins\Product\v1;
 
 use App\AppAdapter\AppRequest;
+use App\Plugins\Product\Entity\Product;
 use App\Plugins\Product\Service\ProductService;
 
 
@@ -15,9 +16,9 @@ class ProductModel
         $this->productService = $productService;
     }
 
-    public function create(AppRequest $appRequest) : void
+    public function create(AppRequest $appRequest) : ?Product
     {
-        $this->productService->createProduct($appRequest);
+        return $this->productService->createProduct($appRequest->getRequestAll());
     }
 
     public function get(AppRequest $request)

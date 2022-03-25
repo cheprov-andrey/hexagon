@@ -6,6 +6,13 @@ use App\Plugins\Product\Entity\Product;
 
 class ProductSerializer
 {
+    public function getProductId(Product $product) : array
+    {
+        return [
+            'product' => $product->getId()
+        ];
+    }
+
     public function getProductSerializer(Product $product) : array
     {
         return [

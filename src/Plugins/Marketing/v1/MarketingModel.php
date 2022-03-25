@@ -3,6 +3,8 @@
 namespace App\Plugins\Marketing\v1;
 
 use App\AppAdapter\AppRequest;
+use App\Plugins\Marketing\Entity\Action;
+use App\Plugins\Marketing\Entity\ActionRules;
 use App\Plugins\Marketing\Service\ActionRulesService;
 use App\Plugins\Marketing\Service\ActionService;
 use App\Plugins\Product\Service\ProductService;
@@ -28,18 +30,19 @@ class MarketingModel
         $this->actionRulesService = $actionRulesService;
     }
 
-    public function create(AppRequest $request) : void
+    public function create(AppRequest $request) : ?Action
     {
         $products = $this->productService->findByArrayId($request->get('products'));
         $this->em->beginTransaction();
-        $action = $this->actionService->create($request, $products);
+        $action = $this->actionService->create($request->getRequestAll(), $products);
         $this->actionRulesService->create($action, $request->get('rules'));
         $this->em->commit();
+        return $action;
     }
 
-    public function createRules(AppRequest $request) : void
+    public function createRules(AppRequest $request) : array
     {
         $action = $this->actionService->find($request->get('action'));
-        $this->actionRulesService->create($action, $request->get('rule'));
+        return $this->actionRulesService->create($action, $request->get('rule'));
     }
 }

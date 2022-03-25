@@ -21,15 +21,15 @@ class ActionService extends BaseService
         $this->actionRepository = $actionRepository;
     }
 
-    public function create(AppRequest $request, array $products): Action
+    public function create(array $attributes, array $products): Action
     {
         $action = new Action();
-        $action->setName($request->get('name'));
-        $action->setAboutAction($request->get('aboutAction'));
-        $action->setTypeDiscount($request->get('typeDiscount'));
-        $action->setWeightDiscount($request->get('weightDiscount'));
-        $action->setDateStart($request->get('dateStart'));
-        $action->setDateEnd($request->get('dateEnd'));
+        $action->setName($attributes['name']);
+        $action->setAboutAction($attributes['aboutAction']);
+        $action->setTypeDiscount($attributes['typeDiscount']);
+        $action->setWeightDiscount($attributes['weightDiscount']);
+        $action->setDateStart($attributes['dateStart']);
+        $action->setDateEnd($attributes['dateEnd']);
         $action->setProducts($products);
         $this->em->persist($action);
         $this->em->flush($action);
