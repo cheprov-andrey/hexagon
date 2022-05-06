@@ -32,7 +32,6 @@ class ProductController extends BaseController
      */
     public function create(AppRequest $appRequest, AppValidator $validator): array
     {
-        $test = 0;
         if(!$validator->validate($appRequest, ProductConstraint::CREATE_CONSTRAINT)) {
             throw new ProductException('отсутствует параметр', Response::HTTP_BAD_REQUEST);
         }
